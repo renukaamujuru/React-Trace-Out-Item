@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import CardList from './Components/Card-list/Card-list.component';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      monsters: [
+      ],
+      searchField: '',
+    }
+  }
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(photos => this.setState({ monsters: photos }));
+  }
+  render() {
+    const { monsters, searchField } = this.state;
+    const filteredMonster = monsters.filter(monster =>
+      monster.name.toLowerCase().includes(searchField));
+    return (
+      <React.Fragment>
+        <h1 className="header">Monsoon Monsters Land</h1>
+        <input className="Search-box" type="search" placeholder="Search Monster"
+          onChange={e => this.setState({ searchField: e.target.value })} />
+        <div className="Card-list">
+          <CardList monsters={filteredMonster} />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
-
 export default App;
+
