@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './../Card/Card.component';
+import { Card } from './../Card/Card.component';
 
 export const CardList = (props) => {
   return (
@@ -10,5 +10,3 @@ export const CardList = (props) => {
     )
   )
 }
-
-export default CardList;
